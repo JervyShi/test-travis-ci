@@ -1,0 +1,27 @@
+language: java
+
+addons:
+  apt:
+    packages:
+    - openjdk-6-jdk
+
+jdk:
+- oraclejdk8
+- openjdk7
+- openjdk6
+
+before_install:
+- echo "Downloading Nacos 0.2.1"
+  && wget https://github.com/alibaba/nacos/releases/download/0.2.1/nacos-server-0.2.1.zip
+  && unzip -q nacos-server-0.2.1.zip
+  && export NACOS_HOME=$PWD/nacos
+  && export PATH=$NACOS_HOME/bin:$PATH
+
+before_script:
+- sh $NACOS_HOME/bin/startup.sh -m standalone
+
+script:
+- cat $NACOS_HOME/logs/start.log
+
+after_script:
+- sh $NACOS_HOME/bin/shutdown.sh
