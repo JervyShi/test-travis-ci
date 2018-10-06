@@ -18,7 +18,7 @@ before_install:
   && export PATH=$NACOS_HOME/bin:$PATH
 
 before_script:
-- sh $NACOS_HOME/bin/startup.sh -m standalone
+- bash $NACOS_HOME/bin/startup.sh -m standalone
 
 script:
 - cat $NACOS_HOME/logs/*
@@ -30,4 +30,4 @@ script:
 - curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'
 
 after_script:
-- sh $NACOS_HOME/bin/shutdown.sh
+- bash $NACOS_HOME/bin/shutdown.sh
