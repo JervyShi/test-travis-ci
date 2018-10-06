@@ -22,6 +22,7 @@ before_script:
 
 script:
 - cat $NACOS_HOME/logs/*
+- free -m
 - ps -ef|grep nacos|grep -v grep 
 - netstat -an|grep 8848
 - curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=127.0.0.1&port=8080'
