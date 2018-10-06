@@ -7,8 +7,6 @@ addons:
 
 jdk:
 - oraclejdk8
-- openjdk7
-- openjdk6
 
 before_install:
 - echo "Downloading Nacos 0.2.1"
@@ -19,6 +17,8 @@ before_install:
 
 before_script:
 - bash $NACOS_HOME/bin/startup.sh -m standalone
+- sleep 10
+- netstat -an|grep nacos|grep -v grep
 
 script:
 - cat $NACOS_HOME/logs/*
