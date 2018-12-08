@@ -11,24 +11,13 @@ jdk:
 - openjdk6
 
 before_install:
-- echo "Downloading Nacos 0.2.1"
-  && wget https://github.com/alibaba/nacos/releases/download/0.2.1/nacos-server-0.2.1.zip
-  && unzip -q nacos-server-0.2.1.zip
-  && export NACOS_HOME=$PWD/nacos
-  && export PATH=$NACOS_HOME/bin:$PATH
+- echo "Downloading Maven 3.2.5"
+  && wget https://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip
+  && unzip -q apache-maven-3.2.5-bin.zip
+  && export M2_HOME=$PWD/apache-maven-3.2.5
+  && export PATH=$M2_HOME/bin:$PATH
+  && cp ./tools/ci/.travis.settings.xml $HOME/.m2/settings.xml
+  && mvn -version
 
-before_script:
-- bash $NACOS_HOME/bin/startup.sh -m standalone
-- sleep 10
-
-script:
-- cat $NACOS_HOME/logs/*
-- free -m
-- ps -ef|grep nacos|grep -v grep 
-- sleep 10
-- netstat -an|grep 8848
-- curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=127.0.0.1&port=8080'
-- curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'
-
-after_script:
-- bash $NACOS_HOME/bin/shutdown.sh
+install:
+- mvn -version
